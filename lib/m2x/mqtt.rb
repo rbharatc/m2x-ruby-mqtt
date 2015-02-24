@@ -19,4 +19,12 @@ class M2X::MQTT
       c.get("/status")
     end
   end
+
+  def device(id)
+    M2X::MQTT::Device.new(client, "id" => id)
+  end
+
+  def create_device(attributes)
+    M2X::MQTT::Device.create!(client, attributes)
+  end
 end
