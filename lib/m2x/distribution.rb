@@ -15,6 +15,6 @@ class M2X::MQTT::Distribution < M2X::MQTT::Resource
   #
   # https://m2x.att.com/developer/documentation/v2/distribution#Add-Device-to-an-existing-Distribution
   def add_device(serial)
-    @client.post("#{path}/devices", nil, { serial: serial })
+    @client.post("#{path}/devices", serial: serial)
   end
 end

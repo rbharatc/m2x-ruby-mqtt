@@ -33,18 +33,15 @@ class M2X::MQTT::Client
   end
 
   [:get, :post, :put, :delete, :head, :options, :patch].each do |verb|
-    define_method verb do |path, qs=nil, params=nil|
-      request(verb, path, qs, params)
+    define_method verb do |path, params=nil|
+      request(verb, path, params)
     end
   end
 
   private
-  def request(verb, path, qs=nil, params=nil)
+  def request(verb, path, params=nil)
     path  = versioned(path)
-    query = URI.encode_www_form(qs) unless qs.nil? || qs.empty?
     body  = params || {}
-
-    path << "?#{query}" if query
 
     payload = {
       id:       SecureRandom.hex,

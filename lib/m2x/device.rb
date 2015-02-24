@@ -9,7 +9,7 @@ class M2X::MQTT::Device < M2X::MQTT::Resource
     #
     # https://m2x.att.com/developer/documentation/v2/device#Create-Device
     def create!(client, params)
-      client.post(PATH, nil, params)
+      client.post(PATH, params)
 
       new(client, params)
     end
@@ -27,7 +27,7 @@ class M2X::MQTT::Device < M2X::MQTT::Resource
   #
   # https://m2x.att.com/developer/documentation/v2/device#Update-Device-Location
   def update_location(params)
-    @client.put("#{path}/location", nil, params)
+    @client.put("#{path}/location", params)
   end
 
   # Post Device Updates (Multiple Values to Multiple Streams)
@@ -57,6 +57,6 @@ class M2X::MQTT::Device < M2X::MQTT::Resource
   #
   # https://staging.m2x.sl.attcompute.com/developer/documentation/v2/device#Post-Device-Updates--Multiple-Values-to-Multiple-Streams-
   def post_updates(params)
-    @client.post("#{path}/updates", nil, params)
+    @client.post("#{path}/updates", params)
   end
 end

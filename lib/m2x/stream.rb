@@ -17,7 +17,7 @@ class M2X::MQTT::Stream < M2X::MQTT::Resource
   #
   # https://m2x.att.com/developer/documentation/v2/device#Create-Update-Data-Stream
   def update!(params={})
-    @client.put(path, {}, params)
+    @client.put(path, params)
 
     @attributes.merge!(params)
   end
@@ -31,7 +31,7 @@ class M2X::MQTT::Stream < M2X::MQTT::Resource
 
     params[:at] = timestamp if timestamp
 
-    @client.put("#{path}/value", nil, params)
+    @client.put("#{path}/value", params)
   end
 
   # Post multiple values to the stream
@@ -48,6 +48,6 @@ class M2X::MQTT::Stream < M2X::MQTT::Resource
   def post_values(values)
     params = { values: values }
 
-    @client.post("#{path}/values", nil, params)
+    @client.post("#{path}/values", params)
   end
 end
