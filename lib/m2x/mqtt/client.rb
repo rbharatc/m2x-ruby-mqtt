@@ -29,7 +29,11 @@ class M2X::MQTT::Client
   end
 
   def get_response
-    JSON.parse(mqtt_client.get_packet(response_topic).payload)
+    return JSON.parse(mqtt_client.get_packet(response_topic).payload) unless block_given?
+
+    mqtt_client.get_packet(response_topic) do |packet|
+      yield JSON.parse(packet.payload)
+    end
   end
 
   [:get, :post, :put, :delete, :head, :options, :patch].each do |verb|
