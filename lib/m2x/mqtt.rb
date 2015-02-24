@@ -31,4 +31,8 @@ class M2X::MQTT
   def distribution(id)
     M2X::MQTT::Distribution.new(client, "id" => id)
   end
+
+  def stream(device_id, name)
+    M2X::MQTT::Stream.new(client, device(device_id), "name" => name)
+  end
 end
