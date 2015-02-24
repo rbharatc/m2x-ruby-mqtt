@@ -11,14 +11,6 @@ class M2X::MQTT::Client
     @api_url = api_url || DEFAULT_API_URL
   end
 
-  def sync(&block)
-    subscribe
-
-    yield(self)
-
-    get_response
-  end
-
   # Public: Subscribe the client to the responses topic
   #
   # This is required in order to receive responses from the

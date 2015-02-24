@@ -15,9 +15,9 @@ class M2X::MQTT
   # The response to this endpoint is an object in which each of its attributes
   # represents an M2X subsystem and its current status.
   def status
-    client.sync do |c|
-      c.get("/status")
-    end
+    client.subscribe
+    client.get("/status")
+    client.get_response
   end
 
   def device(id)
