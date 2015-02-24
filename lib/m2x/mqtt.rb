@@ -27,4 +27,8 @@ class M2X::MQTT
   def create_device(attributes)
     M2X::MQTT::Device.create!(client, attributes)
   end
+
+  def distribution(id)
+    M2X::MQTT::Distribution.new(client, "id" => id)
+  end
 end
