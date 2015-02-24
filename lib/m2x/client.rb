@@ -45,7 +45,7 @@ class M2X::MQTT::Client
   def request(verb, path, qs=nil, params=nil)
     path  = versioned(path)
     query = URI.encode_www_form(qs) unless qs.nil? || qs.empty?
-    body  = JSON.dump(params) unless params
+    body  = params || {}
 
     path << "?#{query}" if query
 
