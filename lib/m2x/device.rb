@@ -19,6 +19,10 @@ class M2X::MQTT::Device < M2X::MQTT::Resource
     @path ||= "#{ PATH }/#{ URI.encode(@attributes.fetch("id")) }"
   end
 
+  def stream(name)
+    M2X::MQTT::Stream.new(@client, self, "name" => name)
+  end
+
   # Post Device Updates (Multiple Values to Multiple Streams)
   #
   # This method allows posting multiple values to multiple streams
