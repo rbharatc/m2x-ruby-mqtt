@@ -67,12 +67,11 @@ class M2X::MQTT::Client
     @response_topic ||= "m2x/#{@api_key}/responses".freeze
   end
 
-  def api_endpoint
-    @api_endpoint ||= "mqtt://#{@api_key}@#{@api_url}".freeze
-  end
-
   def mqtt_client
-    @mqtt_client ||= ::MQTT::Client.new(api_endpoint)
+    @mqtt_client ||= ::MQTT::Client.new.tap do |client|
+                       client.host     = @api_url
+                       client.username = @api_key
+                     end
 
     unless @mqtt_client.connected?
       @mqtt_client.connect
