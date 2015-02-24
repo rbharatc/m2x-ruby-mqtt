@@ -1,13 +1,13 @@
 class M2X::MQTT
   attr_accessor :client
 
-  def initialize(api_key, api_url=nil)
+  def initialize(api_key, options={})
     @api_key = api_key
-    @api_url = api_url
+    @options = options
   end
 
   def client
-    @client ||= M2X::MQTT::Client.new(@api_key, @api_url)
+    @client ||= M2X::MQTT::Client.new(@api_key, @options)
   end
 
   # Returns the status of the M2X system.

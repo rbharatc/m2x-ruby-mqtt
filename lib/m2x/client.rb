@@ -6,9 +6,14 @@ class M2X::MQTT::Client
   DEFAULT_API_URL = "staging-api.m2x.sl.attcompute.com".freeze
   API_VERSION     = "v2"
 
-  def initialize(api_key, api_url=nil)
+  DEFAULTS = {
+    api_url: DEFAULT_API_URL,
+    use_ssl: false
+  }
+
+  def initialize(api_key, options={})
     @api_key = api_key
-    @api_url = api_url || DEFAULT_API_URL
+    @options = DEFAULTS.merge(options)
   end
 
   # Public: Subscribe the client to the responses topic
@@ -61,8 +66,13 @@ class M2X::MQTT::Client
 
   def mqtt_client
     @mqtt_client ||= ::MQTT::Client.new.tap do |client|
-                       client.host     = @api_url
+                       client.host     = @options[:api_url]
                        client.username = @api_key
+
+                       if @options[:use_ssl]
+                         client.ssl  = true
+                         client.port = 8883
+                       end
                      end
 
     unless @mqtt_client.connected?
