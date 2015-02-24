@@ -23,6 +23,13 @@ class M2X::MQTT::Device < M2X::MQTT::Resource
     M2X::MQTT::Stream.new(@client, self, "name" => name)
   end
 
+  # Update the current location of the specified device.
+  #
+  # https://m2x.att.com/developer/documentation/v2/device#Update-Device-Location
+  def update_location(params)
+    @client.put("#{path}/location", nil, params)
+  end
+
   # Post Device Updates (Multiple Values to Multiple Streams)
   #
   # This method allows posting multiple values to multiple streams
