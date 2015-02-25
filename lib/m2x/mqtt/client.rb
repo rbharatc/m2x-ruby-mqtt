@@ -6,6 +6,8 @@ class M2X::MQTT::Client
   DEFAULT_API_URL = "staging-api.m2x.sl.attcompute.com".freeze
   API_VERSION     = "v2"
 
+  USER_AGENT = "M2X-Ruby/#{M2X::MQTT::VERSION} #{RUBY_ENGINE}/#{RUBY_VERSION} (#{RUBY_PLATFORM})".freeze
+
   DEFAULTS = {
     api_url: DEFAULT_API_URL,
     use_ssl: false
@@ -63,6 +65,7 @@ class M2X::MQTT::Client
 
     payload = {
       id:       SecureRandom.hex,
+      agent:    USER_AGENT,
       method:   verb.upcase,
       resource: path,
       body:     body
