@@ -3,7 +3,7 @@ require "json"
 require "securerandom"
 
 class M2X::MQTT::Client
-  DEFAULT_API_URL = "staging-api.m2x.sl.attcompute.com".freeze
+  DEFAULT_API_URL = "api-m2x.att.com".freeze
   API_VERSION     = "v2"
 
   USER_AGENT = "M2X-Ruby/#{M2X::MQTT::VERSION} #{RUBY_ENGINE}/#{RUBY_VERSION} (#{RUBY_PLATFORM})".freeze
