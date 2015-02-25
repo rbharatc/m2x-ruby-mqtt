@@ -16,18 +16,32 @@ class M2X::MQTT::Client
     @options = DEFAULTS.merge(options)
   end
 
-  # Public: Subscribe the client to the responses topic
+  # Public: Subscribe the client to the responses topic.
   #
   # This is required in order to receive responses from the
-  # M2X API server.
+  # M2X API server. Note that #get_response already subscribes
+  # the client.
   def subscribe
     mqtt_client.subscribe(response_topic)
   end
 
+  # Public: Send a payload to the M2X API server.
+  #
+  # payload - a Hash with the following keys:
+  #           :id
+  #           :method
+  #           :resource
+  #           :body
+  # See https://m2x.att.com/developer/documentation/v2/mqtt
   def publish(payload)
     mqtt_client.publish(request_topic, payload.to_json)
   end
 
+  # Public: Retrieve a response from the M2X Server.
+  #
+  # Returns a Hash with the response from the MQTT Server in M2X.
+  # Optionally receives a block which will iterate through responses
+  # and yield each one.
   def get_response
     return JSON.parse(mqtt_client.get_packet(response_topic).payload) unless block_given?
 
