@@ -30,3 +30,5 @@ while @run
 end
 
 Process.kill(:TERM, pid)
+
+puts
