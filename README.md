@@ -60,7 +60,7 @@ API_KEY=<YOUR-API-KEY> DEVICE=<YOUR-DEVICE-ID> ./m2x-uptime.rb
 #! /usr/bin/env ruby
 
 #
-# See https://github.com/attm2x/m2x-ruby-mqtt/blob/master/README.md#example-usage
+# https://github.com/attm2x/m2x-ruby-mqtt#example
 # for instructions
 #
 

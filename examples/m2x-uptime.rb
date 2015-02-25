@@ -1,7 +1,7 @@
 #! /usr/bin/env ruby
 
 #
-# See https://github.com/attm2x/m2x-ruby-mqtt/blob/master/README.md#example-usage
+# See https://github.com/attm2x/m2x-ruby-mqtt#example
 # for instructions
 #
 
