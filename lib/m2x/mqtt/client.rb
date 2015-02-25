@@ -69,6 +69,8 @@ class M2X::MQTT::Client
     }
 
     publish(payload)
+
+    { id: payload[:id] }
   end
 
   def request_topic
