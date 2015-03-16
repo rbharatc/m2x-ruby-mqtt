@@ -59,6 +59,7 @@ class M2X::MQTT::Client
   end
 
   private
+
   def request(verb, path, params=nil)
     path  = versioned(path)
     body  = params || {}
