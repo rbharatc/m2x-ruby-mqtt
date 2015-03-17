@@ -29,7 +29,7 @@ class M2X::MQTT::Stream < M2X::MQTT::Resource
   def update_value(value, timestamp=nil)
     params = { value: value }
 
-    params[:at] = timestamp if timestamp
+    params[:timestamp] = timestamp if timestamp
 
     @client.put("#{path}/value", params)
   end
