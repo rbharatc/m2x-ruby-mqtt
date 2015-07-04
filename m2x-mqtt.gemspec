@@ -18,4 +18,6 @@ Gem::Specification.new do |s|
                 "lib/**/*.rb",
                 "*.gemspec"
                ]
+
+  s.add_dependency "mqtt", "~> 0"
 end
