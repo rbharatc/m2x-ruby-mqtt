@@ -46,6 +46,15 @@ This provides an interface to your data in M2X
 
 Refer to the documentation on each class for further usage instructions.
 
+## Time
+
+For devices that do not have a Real Time Clock, M2X provides a set of endpoints that returns the server's time.
+
+```ruby
+m2x.time
+=> {"seconds"=>1435970368, "millis"=>1435970368451, "iso8601"=>"2015-07-04T00:39:28.451Z"}
+```
+
 ## Example
 
 In order to run this example, you will need a `Device ID` and `API Key`. If you don't have any, access your M2X account, create a new [Device](https://m2x.att.com/devices), and copy the `Device ID` and `API Key` values. The following script will send your CPU load average to three different streams named `load_1m`, `load_5m` and `load_15`. Check that there's no need to create a stream in order to write values into it.

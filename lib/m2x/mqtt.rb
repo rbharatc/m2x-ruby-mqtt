@@ -28,6 +28,12 @@ module M2X
       client.get_response
     end
 
+    def time
+      client.subscribe
+      client.get("/time")
+      client.get_response["body"]
+    end
+
     def device(id)
       M2X::MQTT::Device.new(client, "id" => id)
     end
