@@ -20,11 +20,12 @@ class M2X::MQTT::Client
 
   # Public: Subscribe the client to the responses topic.
   #
-  # This is required in order to receive responses from the
-  # M2X API server. Note that #get_response already subscribes
-  # the client.
+  # This is required in order to receive responses or commands
+  # from the M2X API server. Note that #get_response already
+  # subscribes the client.
   def subscribe
     mqtt_client.subscribe(response_topic)
+    mqtt_client.subscribe(command_topic)
   end
 
   # Public: Send a payload to the M2X API server.
@@ -83,6 +84,10 @@ class M2X::MQTT::Client
 
   def response_topic
     @response_topic ||= "m2x/#{@api_key}/responses".freeze
+  end
+
+  def command_topic
+    @command_topic ||= "m2x/#{@api_key}/commands".freeze
   end
 
   def mqtt_client
