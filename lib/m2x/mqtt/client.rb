@@ -57,6 +57,43 @@ class M2X::MQTT::Client
     end
   end
 
+  # Public: Retrieve a command from the M2X Server.
+  #
+  # Returns a Hash with the command from the MQTT Server in M2X.
+  # Optionally receives a block which will iterate through commands
+  # and yield each one.
+  def get_command
+    mqtt_client.subscribe(command_topic)
+
+    return packet_router.json_fetch(mqtt_client, command_topic) unless block_given?
+
+    loop do
+      yield packet_router.json_fetch(mqtt_client, command_topic)
+    end
+  end
+
+  # Public: Retrieve either a repsonse or a command from the M2X Server.
+  #
+  # Returns a Hash with the response or command from the MQTT Server in M2X.
+  # Optionally receives a block which will iterate through commands
+  # and yield each one.
+  def get_response_or_command
+    mqtt_client.subscribe(response_topic)
+    mqtt_client.subscribe(command_topic)
+
+    unless block_given?
+      topic, json = json_fetch_any(mqtt_client)
+
+      return json
+    end
+
+    loop do
+      topic, json = json_fetch_any(mqtt_client)
+
+      yield json
+    end
+  end
+
   [:get, :post, :put, :delete, :head, :options, :patch].each do |verb|
     define_method verb do |path, params=nil|
       request(verb, path, params)
