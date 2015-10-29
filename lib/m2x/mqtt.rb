@@ -7,6 +7,7 @@ module M2X
     require_relative "mqtt/device"
     require_relative "mqtt/distribution"
     require_relative "mqtt/stream"
+    require_relative "mqtt/command"
 
     attr_accessor :client
 
