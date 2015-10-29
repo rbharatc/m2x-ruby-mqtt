@@ -16,6 +16,8 @@ class M2X::MQTT::Client
   def initialize(api_key, options={})
     @api_key = api_key
     @options = DEFAULTS.merge(options)
+
+    @packet_router = PacketRouter.new
   end
 
   # Public: Subscribe the client to the responses topic.
@@ -46,10 +48,12 @@ class M2X::MQTT::Client
   # Optionally receives a block which will iterate through responses
   # and yield each one.
   def get_response
-    return JSON.parse(mqtt_client.get_packet(response_topic).payload) unless block_given?
+    mqtt_client.subscribe(response_topic)
 
-    mqtt_client.get_packet(response_topic) do |packet|
-      yield JSON.parse(packet.payload)
+    return packet_router.json_fetch(mqtt_client, response_topic) unless block_given?
+
+    loop do
+      yield packet_router.json_fetch(mqtt_client, response_topic)
     end
   end
 
@@ -60,6 +64,8 @@ class M2X::MQTT::Client
   end
 
   private
+
+  attr_reader :packet_router
 
   def request(verb, path, params=nil)
     path  = versioned(path)
