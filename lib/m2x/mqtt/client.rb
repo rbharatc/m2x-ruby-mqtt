@@ -65,10 +65,10 @@ class M2X::MQTT::Client
   def get_command
     mqtt_client.subscribe(command_topic)
 
-    return packet_router.json_fetch(mqtt_client, command_topic) unless block_given?
+    return M2X::MQTT::Command.new(self, packet_router.json_fetch(mqtt_client, command_topic)) unless block_given?
 
     loop do
-      yield packet_router.json_fetch(mqtt_client, command_topic)
+      yield M2X::MQTT::Command.new(self, packet_router.json_fetch(mqtt_client, command_topic))
     end
   end
 
@@ -83,7 +83,7 @@ class M2X::MQTT::Client
 
     unless block_given?
       topic, payload = json_fetch_any(mqtt_client)
-      payload = Command.new(self, payload)
+      payload = M2X::MQTT::Command.new(self, payload)
 
       return payload
     end
