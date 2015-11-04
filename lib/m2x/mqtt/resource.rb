@@ -21,4 +21,19 @@ class M2X::MQTT::Resource
   def path
     raise NotImplementedError
   end
+
+  # Return the resource details
+  def view
+    @client.get(path)
+
+    res = @client.get_response
+
+    @attributes = res["body"] if res["status"] < 300 && res["body"]
+  end
+
+  # Refresh the resource details and return self
+  def refresh
+    view
+    self
+  end
 end
