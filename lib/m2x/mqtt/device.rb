@@ -38,9 +38,10 @@ class M2X::MQTT::Device < M2X::MQTT::Resource
   def commands(params={})
     @client.get("#{path}/commands", params)
 
-    commands = @client.get_response["commands"]
+    res      = @client.get_response
+    commands = res["body"]["commands"] if res["status"] < 300
 
-    commands && commands.map { |data| Command.new(@client, data) }
+    commands.map { |data| M2X::MQTT::Command.new(@client, data) } if commands
   end
 
   # Update the current location of the specified device.
