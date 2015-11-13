@@ -9,7 +9,7 @@ class M2X::MQTT::Client::PacketRouter
 
   def fetch(mqtt_client, topic)
     @lock.synchronize do
-      packet = @queues[topic].pop
+      packet = @queues[topic].shift
       return packet if packet
 
       loop do
