@@ -23,6 +23,27 @@ class M2X::MQTT::Device < M2X::MQTT::Resource
     M2X::MQTT::Stream.new(@client, self, "name" => name)
   end
 
+  # Return a list of recently received commands.
+  #
+  # Most commonly, this method can be used to fetch unacknowledged
+  # commands by filtering by delivery status, using the parameters:
+  #
+  # { status: "sent" }
+  #
+  # MQTT clients that are subscribed to command delivery notifications
+  # should still use this method periodically to check for unacknowledged
+  # commands that were missed while offline or during a network partition.
+  #
+  # https://m2x.att.com/developer/documentation/v2/commands#Device-List-of-Received-Commands
+  def commands(params={})
+    @client.get("#{path}/commands", params)
+
+    res      = @client.get_response
+    commands = res["body"]["commands"] if res["status"] < 300
+
+    commands.map { |data| M2X::MQTT::Command.new(@client, data) } if commands
+  end
+
   # Update the current location of the specified device.
   #
   # https://m2x.att.com/developer/documentation/v2/device#Update-Device-Location

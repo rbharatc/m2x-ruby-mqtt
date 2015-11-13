@@ -2,10 +2,12 @@ module M2X
   class MQTT
     require_relative "mqtt/version"
     require_relative "mqtt/client"
+    require_relative "mqtt/client/packet_router"
     require_relative "mqtt/resource"
     require_relative "mqtt/device"
     require_relative "mqtt/distribution"
     require_relative "mqtt/stream"
+    require_relative "mqtt/command"
 
     attr_accessor :client
 
