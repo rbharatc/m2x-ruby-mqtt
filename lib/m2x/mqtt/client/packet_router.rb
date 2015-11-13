@@ -21,24 +21,7 @@ class M2X::MQTT::Client::PacketRouter
     end
   end
 
-  def fetch_any(mqtt_client, topic)
-    @lock.synchronize do
-      @queues.each do |queue|
-        packet = queue.pop
-        return packet if packet
-      end
-
-      mqtt_client.get_packet
-    end
-  end
-
   def json_fetch(mqtt_client, topic)
     JSON.parse(fetch(mqtt_client, topic).payload)
-  end
-
-  def json_fetch_any(mqtt_client)
-    packet = fetch_any(mqtt_client)
-
-    return [packet.topic, JSON.parse(packet.payload)]
   end
 end
