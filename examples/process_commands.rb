@@ -86,7 +86,7 @@ m2x.client.subscribe
 device = m2x.device(DEVICE)
 
 # List any commands sent to the device but still unacknowledged.
-commands = device.commands(status: "sent")
+commands = device.commands(status: "pending")
 
 # Process each command from the unacknowledged list (starting with the oldest).
 commands.reverse_each do |command|

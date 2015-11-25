@@ -28,7 +28,7 @@ class M2X::MQTT::Device < M2X::MQTT::Resource
   # Most commonly, this method can be used to fetch unacknowledged
   # commands by filtering by delivery status, using the parameters:
   #
-  # { status: "sent" }
+  # { status: "pending" }
   #
   # MQTT clients that are subscribed to command delivery notifications
   # should still use this method periodically to check for unacknowledged
